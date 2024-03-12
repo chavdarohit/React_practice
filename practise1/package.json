@@ -4,6 +4,7 @@
   "description": "",
   "main": "App.js",
   "scripts": {
+    "start": "npx parcel index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1"
   }
 }
