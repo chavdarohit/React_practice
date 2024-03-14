@@ -22,10 +22,9 @@ const RestaurantCard = ({ name, cuisines, avgRating, img, boxColor }) => {
 
   return (
     <div className="card">
-      <div className="background"></div>
-      <img src={img} alt="img"></img>
+      {/* <img src={img} alt="img"></img> */}
       <h2>{name}</h2>
-      <p>{cuisines.join(", ")}</p>
+      <p>{cuisines && cuisines.join(", ")}</p>
       <p
         style={{
           backgroundColor: boxColor,

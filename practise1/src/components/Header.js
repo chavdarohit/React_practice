@@ -1,6 +1,7 @@
 import userImg from "../../images/user_456212.png";
 
 const Header = () => {
+  const title = "Junk bazzar";
   return (
     <div id="header-container">
       <div className="nav-info">
@@ -11,8 +12,10 @@ const Header = () => {
             id="logo"
           ></img>
         </a>
-        <h2>Junk bazzar</h2>
       </div>
+
+      <h2>{title}</h2>
+
       <div className="nav-items">
         <ul>
           <li>Home</li>
