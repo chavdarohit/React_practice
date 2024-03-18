@@ -22,7 +22,10 @@ const RestaurantCard = ({ name, cuisines, avgRating, img, boxColor }) => {
 
   return (
     <div className="card">
-      {/* <img src={img} alt="img"></img> */}
+      <img
+        src={`https://res.cloudinary.com/swiggy/image/upload/${img}.jpg`}
+        alt="img"
+      ></img>
       <h2>{name}</h2>
       <p>{cuisines && cuisines.join(", ")}</p>
       <p

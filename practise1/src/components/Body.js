@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { restaurants } from "../config";
 import RestaurantCard from "./RestaurantCard";
+import Shimmer from "./Shimmer";
 
 const filterData = (searchTerm, restaurantList) => {
-  return restaurantList.filter((rs) => rs.info.name.includes(searchTerm));
+  return restaurantList.filter((rs) =>
+    rs?.info?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 };
 
 const Body = () => {
@@ -23,6 +25,7 @@ const Body = () => {
     );
     console.log("data", data);
     const json = await data.json();
+
     console.log(
       "data.json ",
       json?.data?.cards[4]?.card?.card?.gridElements.infoWithStyle.restaurants
@@ -30,55 +33,63 @@ const Body = () => {
     setRestaurantList(
       json?.data?.cards[4]?.card?.card?.gridElements.infoWithStyle.restaurants
     );
+    setfilteredRestaurantList(
+      json?.data?.cards[4]?.card?.card?.gridElements.infoWithStyle.restaurants
+    );
   };
 
   console.log("component rendered...", restaurantList.length);
 
-  return restaurantList.length === 0 ? (
-    <h1>Loading...</h1>
-  ) : (
-    <div className="container">
-      {console.log("return called")}
-      <div className="search-container">
-        <input
-          type="text"
-          name="search-input"
-          placeholder="search"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button
-          className="search-btn"
-          onClick={() => {
-            const data = filterData(searchTerm, restaurantList);
-            setfilteredRestaurantList(data);
-          }}
-        >
-          Search
-        </button>
-      </div>
+  if (restaurantList)
+    return restaurantList.length === 0 ? (
+      <Shimmer />
+    ) : (
+      <div className="container">
+        {console.log("return called")}
+        <div className="search-container">
+          <input
+            type="text"
+            name="search-input"
+            placeholder="search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button
+            className="search-btn"
+            onClick={() => {
+              const data = filterData(searchTerm, restaurantList);
+              setfilteredRestaurantList(data);
+            }}
+          >
+            Search
+          </button>
+        </div>
 
-      <div id="body-container">
-        {filteredRestaurantList.map((rs) => {
-          return (
-            <RestaurantCard
-              name={rs.info.name}
-              cuisines={rs.info.cuisines}
-              avgRating={rs.info.avgRating}
-              boxColor={
-                rs.info.avgRating < 2
-                  ? "red"
-                  : rs.info.avgRating > 3.5
-                  ? "green"
-                  : "yellow"
-              }
-              // img={rs.info.image.url}
-              key={rs.info.id}
-            />
-          );
-        })}
+        <div id="body-container">
+          {filteredRestaurantList?.length === 0 ? (
+            <h1>No restaurants found</h1>
+          ) : (
+            filteredRestaurantList.map((rs) => {
+              return (
+                <RestaurantCard
+                  name={rs.info.name}
+                  cuisines={rs.info.cuisines}
+                  avgRating={rs.info.avgRating}
+                  boxColor={
+                    rs.info.avgRating < 2
+                      ? "red"
+                      : rs.info.avgRating > 3.5
+                      ? "green"
+                      : "yellow"
+                  }
+                  img={rs.info.cloudinaryImageId}
+                  key={rs.info.id}
+                />
+              );
+            })
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
 };
 export default Body;

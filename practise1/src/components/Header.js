@@ -1,4 +1,4 @@
-import userImg from "../../images/user_456212.png";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const title = "Junk bazzar";
@@ -18,8 +18,12 @@ const Header = () => {
 
       <div className="nav-items">
         <ul>
-          <li>Home</li>
-          <li>About</li>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
           <li>Contact</li>
           <li>
             <a href={""}>Cart</a>
